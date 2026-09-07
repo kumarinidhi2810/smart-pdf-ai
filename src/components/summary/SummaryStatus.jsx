@@ -9,7 +9,7 @@ import {
 import PictureAsPdfRoundedIcon from "@mui/icons-material/PictureAsPdfRounded";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 
-function SummaryStatus({ fileName, status, generatedAt }) {
+function SummaryStatus({ fileName, status, generatedAt,summary }) {
   return (
     <Paper
       elevation={0}
@@ -63,6 +63,34 @@ function SummaryStatus({ fileName, status, generatedAt }) {
           }}
         />
       </Stack>
+      {summary && (
+  <Box
+    sx={{
+      mt: 3,
+      pt: 3,
+      borderTop: "1px solid",
+      borderColor: "divider",
+    }}
+  >
+    <Typography
+      variant="subtitle1"
+      fontWeight={600}
+      sx={{ mb: 1 }}
+    >
+      AI Generated Summary
+    </Typography>
+
+    <Typography
+      variant="body1"
+      color="text.secondary"
+      sx={{
+        lineHeight: 1.8,
+      }}
+    >
+      {summary}
+    </Typography>
+  </Box>
+)}
     </Paper>
   );
 }

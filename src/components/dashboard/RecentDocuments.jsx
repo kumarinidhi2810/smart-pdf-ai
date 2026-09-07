@@ -1,29 +1,63 @@
+import { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 
 import RecentDocumentsTable from "./RecentDocumentsTable";
-import recentDocuments from "../../data/recentDocuments";
 
 function RecentDocuments() {
+  const [documents, setDocuments] = useState([]);
+
+  useEffect(() => {
+    const storedDocuments = JSON.parse(
+      localStorage.getItem("smartPdfDocuments") || "[]"
+    );
+
+    const recentDocuments = [...storedDocuments]
+      .sort(
+        (a, b) =>
+          new Date(b.processedAt) -
+          new Date(a.processedAt)
+      )
+      .slice(0, 5);
+
+    setDocuments(recentDocuments);
+  }, []);
+
   return (
-    <Box sx={{ mt: 6 }}>
-      <Typography
-        variant="h5"
+    <Box sx={{ mt: 5 }}>
+      <Box
         sx={{
-          fontWeight: 700,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 1.5,
         }}
       >
-        Recent Documents
-      </Typography>
+        <Box>
+          <Typography
+            sx={{
+              fontSize: 18,
+              fontWeight: 700,
+              color: "#172033",
+            }}
+          >
+            Recent Documents
+          </Typography>
 
-      <Typography
-        variant="body2"
-        color="text.secondary"
-        sx={{ mt: 1, mb: 3 }}
-      >
-        View your recently uploaded PDF documents and their AI processing status.
-      </Typography>
+          <Typography
+            sx={{
+              fontSize: 12.5,
+              color: "#64748B",
+              mt: 0.3,
+            }}
+          >
+            Recently processed PDF documents
+          </Typography>
+        </Box>
+      </Box>
 
-      <RecentDocumentsTable documents={recentDocuments} />
+      <RecentDocumentsTable
+        documents={documents}
+      />
     </Box>
   );
 }

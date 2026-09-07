@@ -28,18 +28,7 @@ function SidebarLogo() {
           }}
         />
       </Box>
-
-      <Typography variant="h6" fontWeight={700}>
-        Smart PDF AI
-      </Typography>
-
-      <Typography
-        variant="body2"
-        color="text.secondary"
-        sx={{ mt: 0.5 }}
-      >
-        AI Document Assistant
-      </Typography>
+     
     </Box>
   );
 }

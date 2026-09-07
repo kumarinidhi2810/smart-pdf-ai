@@ -1,12 +1,13 @@
-import { Drawer, Box } from "@mui/material";
+import { Drawer, Box, IconButton, Tooltip } from "@mui/material";
 
-import SidebarLogo from "./SidebarLogo";
+import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
+import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
+
 import SidebarMenu from "./SidebarMenu";
-import SidebarUser from "./SidebarUser";
 
-const drawerWidth = 270;
+function Sidebar({ collapsed, setCollapsed }) {
+  const drawerWidth = collapsed ? 72 : 220;
 
-function Sidebar() {
   return (
     <Drawer
       variant="permanent"
@@ -16,17 +17,52 @@ function Sidebar() {
 
         "& .MuiDrawer-paper": {
           width: drawerWidth,
-          display: "flex",
-          borderRight: "1px solid #E5E7EB",
           boxSizing: "border-box",
+          borderRight: "1px solid #E5E7EB",
+          top: "70px",
+          height: "calc(100vh - 70px)",
+          overflowX: "hidden",
+
+          transition: "width 0.25s ease",
         },
       }}
     >
-      <SidebarLogo />
+      {/* COLLAPSE BUTTON */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: collapsed ? "center" : "flex-end",
+          alignItems: "center",
+          px: collapsed ? 0 : 1,
+          py: 1,
+        }}
+      >
+        <Tooltip
+          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          placement="right"
+        >
+          <IconButton
+            onClick={() => setCollapsed(!collapsed)}
+            size="small"
+            sx={{
+              color: "#64748B",
 
-      <SidebarMenu />
+              "&:hover": {
+                bgcolor: "#F1F5F9",
+                color: "primary.main",
+              },
+            }}
+          >
+            {collapsed ? (
+              <ChevronRightRoundedIcon />
+            ) : (
+              <ChevronLeftRoundedIcon />
+            )}
+          </IconButton>
+        </Tooltip>
+      </Box>
 
-      <SidebarUser />
+      <SidebarMenu collapsed={collapsed} />
     </Drawer>
   );
 }

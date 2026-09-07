@@ -1,23 +1,30 @@
 import { Container } from "@mui/material";
+import { useLocation } from "react-router-dom";
 
 import DashboardLayout from "../../layouts/DashboardLayout";
 
 import SummaryHeader from "../../components/summary/SummaryHeader";
 import SummaryStatus from "../../components/summary/SummaryStatus";
 
-import summary from "../../data/summary";
-
 function SummaryPage() {
+  const location = useLocation();
+
+  const summaries = location.state?.summaries || [];
+
   return (
     <DashboardLayout>
       <Container maxWidth="lg">
         <SummaryHeader />
 
-        <SummaryStatus
-          fileName={summary.fileName}
-          status={summary.status}
-          generatedAt={summary.generatedAt}
-        />
+        {summaries.map((item, index) => (
+          <SummaryStatus
+            key={index}
+            fileName={item.fileName}
+            status="Completed"
+            generatedAt="Just now"
+            summary={item.summary}
+          />
+        ))}
       </Container>
     </DashboardLayout>
   );

@@ -52,19 +52,75 @@ function UploadPdf() {
         extractedPDFs
       );
 
-      // Step 2: Generate summary for each PDF
-      const summaries =
+      // Only successfully processed PDFs
+      const processedPDFs = extractedPDFs.filter(
+        (pdf) => pdf.text && pdf.text.trim().length > 0
+      );
+
+      console.log(
+        "SUCCESSFULLY PROCESSED PDFs:",
+        processedPDFs
+      );
+
+      // Step 2: Save processed PDF information
+      const existingDocuments = JSON.parse(
+        localStorage.getItem("smartPdfDocuments") || "[]"
+      );
+
+      const newDocuments = processedPDFs.map((pdf) => {
+        const wordCount = pdf.text
+          .trim()
+          .split(/\s+/)
+          .filter(Boolean).length;
+
+        return {
+          fileName: pdf.fileName,
+          wordCount,
+          status: "processed",
+          processedAt: new Date().toISOString(),
+        };
+      });
+
+      localStorage.setItem(
+        "smartPdfDocuments",
+        JSON.stringify([
+          ...existingDocuments,
+          ...newDocuments,
+        ])
+      );
+
+      // Step 3: Generate ONE combined summary
+      const summaryResult =
         generateMultiplePDFSummaries(extractedPDFs);
 
       console.log(
-        "GENERATED SUMMARIES:",
-        summaries
+        "GENERATED COMBINED SUMMARY:",
+        summaryResult
       );
 
-      // Step 3: Go to Summary Page
+      // Step 4: Save generated summary
+      const existingSummaries = JSON.parse(
+        localStorage.getItem("smartPdfSummaries") || "[]"
+      );
+
+      const summaryRecord = {
+        fileNames: summaryResult.fileNames,
+        summary: summaryResult.summary,
+        generatedAt: new Date().toISOString(),
+      };
+
+      localStorage.setItem(
+        "smartPdfSummaries",
+        JSON.stringify([
+          ...existingSummaries,
+          summaryRecord,
+        ])
+      );
+
+      // Step 5: Go to Summary Page
       navigate("/summary", {
         state: {
-          summaries,
+          summaries: summaryResult,
         },
       });
 
