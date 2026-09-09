@@ -4,12 +4,14 @@ const cleanText = (text) => {
     .trim();
 };
 
+
 const splitIntoSentences = (text) => {
   return text
     .split(/(?<=[.!?])\s+/)
     .map((sentence) => sentence.trim())
     .filter((sentence) => sentence.length > 30);
 };
+
 
 export const generateSummary = (text) => {
   if (!text || text.trim().length === 0) {
@@ -46,9 +48,26 @@ export const generateSummary = (text) => {
   return selectedSentences.join(" ");
 };
 
+
 export const generateMultiplePDFSummaries = (pdfs) => {
-  return pdfs.map((pdf) => ({
-    fileName: pdf.fileName,
-    summary: generateSummary(pdf.text),
-  }));
+  if (!pdfs || pdfs.length === 0) {
+    return {
+      fileNames: [],
+      summary: "No PDF files found.",
+    };
+  }
+
+  // Combine text from all PDFs
+  const combinedText = pdfs
+    .map((pdf) => pdf.text)
+    .filter(Boolean)
+    .join(" ");
+
+  // Generate ONE combined summary
+  const combinedSummary = generateSummary(combinedText);
+
+  return {
+    fileNames: pdfs.map((pdf) => pdf.fileName),
+    summary: combinedSummary,
+  };
 };

@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 
 import DashboardLayout from "../../layouts/DashboardLayout";
 
-import SummaryHeader from "../../components/summary/SummaryHeader";
 import SummaryStatus from "../../components/summary/SummaryStatus";
 
 function SummaryPage() {
@@ -16,6 +15,7 @@ function SummaryPage() {
     const storedSummaries = JSON.parse(
       localStorage.getItem("smartPdfSummaries") || "[]"
     );
+    console.log("STORED SUMMARIES:", storedSummaries);
 
     // Newest summary first
     const sortedSummaries = [...storedSummaries].reverse();
@@ -26,7 +26,7 @@ function SummaryPage() {
   return (
     <DashboardLayout>
       <Container maxWidth="lg">
-        <SummaryHeader />
+      
 
         {summaries.length === 0 ? (
           <Box
@@ -63,7 +63,11 @@ function SummaryPage() {
           summaries.map((item, index) => (
             <SummaryStatus
               key={`${item.generatedAt}-${index}`}
-              fileName={`${item.fileNames?.length || 0} PDFs`}
+              fileName={
+  item.fileNames?.length
+    ? item.fileNames.join(" • ")
+    : "Generated Summary"
+}
               status="Completed"
               generatedAt={
                 item.generatedAt
