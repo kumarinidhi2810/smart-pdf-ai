@@ -105,25 +105,30 @@ function Register() {
         }}
       >
         {/* ICON */}
+        
         <Box
-          sx={{
-            width: 48,
-            height: 48,
-            borderRadius: 2,
-            bgcolor: "#EFF6FF",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            mb: 2,
-          }}
-        >
-          <PersonAddRoundedIcon
-            sx={{
-              color: "#2563EB",
-              fontSize: 24,
-            }}
-          />
-        </Box>
+  sx={{
+    width: 60,
+    height: 60,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    mx: "auto",
+    mb: 1.5,
+  }}
+>
+  <Box
+    component="img"
+    src="/images/dfccil logo.jpg"
+    alt="DFCCIL Logo"
+    sx={{
+      width: 55,
+      height: 55,
+      objectFit: "contain",
+    }}
+  />
+</Box>
+        
 
         {/* HEADING */}
         <Typography
@@ -137,16 +142,7 @@ function Register() {
           Create Account
         </Typography>
 
-        <Typography
-          sx={{
-            fontSize: 13.5,
-            color: "#64748B",
-            mt: 0.8,
-            mb: 3.5,
-          }}
-        >
-          Create your account to use Smart PDF AI
-        </Typography>
+        
 
         <Stack spacing={2.2}>
           {/* NAME */}
@@ -273,9 +269,12 @@ function Register() {
               textTransform: "none",
               fontSize: 14,
               fontWeight: 700,
+              background:"#D32F2F",
+               color:"#ffffff",
               boxShadow: "none",
               "&:hover": {
-                boxShadow: "none",
+                background:"#B71C1C",
+                boxShadow:"none",
               },
             }}
           >
@@ -290,7 +289,7 @@ function Register() {
             sx={{
               textTransform: "none",
               fontSize: 13,
-              color: "#64748B",
+              color: "#f41212",
             }}
           >
             Back to Sign In

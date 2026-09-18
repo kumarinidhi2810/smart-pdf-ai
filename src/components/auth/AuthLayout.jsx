@@ -19,38 +19,48 @@ function AuthLayout({ children }) {
           content: '""',
           position: "absolute",
           inset: 0,
-          backgroundColor: "rgba(15, 32, 45, 0.62)",
+          backgroundColor: "rgba(15, 32, 45, 0.55)",
         },
       }}
     >
-      {/* Login Card */}
+      {/* MAIN LOGIN CONTAINER */}
       <Box
         sx={{
           position: "relative",
           zIndex: 1,
 
-          width: "min(920px, 92%)",
-          minHeight: 470,
+          width: {
+            xs: "94%",
+            sm: "90%",
+            md: "900px",
+          },
+
+          minHeight: {
+            xs: "auto",
+            md: 540,
+          },
 
           display: "grid",
+
           gridTemplateColumns: {
             xs: "1fr",
-            md: "42% 58%",
+            md: "44% 56%",
           },
 
           bgcolor: "#FFFFFF",
-          borderRadius: 3,
+          borderRadius: "14px",
           overflow: "hidden",
 
-          boxShadow: "0 20px 50px rgba(0, 0, 0, 0.25)",
+          boxShadow: "0 18px 45px rgba(0, 0, 0, 0.25)",
         }}
       >
-        {/* LEFT - LOGIN */}
+        {/* LEFT - LOGIN SECTION */}
         <Box
           sx={{
             p: {
               xs: 3,
-              md: 4,
+              sm: 4,
+              md: 4.5,
             },
 
             display: "flex",
@@ -63,7 +73,7 @@ function AuthLayout({ children }) {
           {children}
         </Box>
 
-        {/* RIGHT - DFCCIL IMAGE */}
+        {/* RIGHT - IMAGE SECTION */}
         <Box
           sx={{
             display: {
@@ -76,6 +86,7 @@ function AuthLayout({ children }) {
             backgroundImage: "url('/images/dfccil-login.jpg')",
             backgroundSize: "cover",
             backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
           }}
         />
       </Box>

@@ -15,7 +15,7 @@ import {
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import QrCode2RoundedIcon from "@mui/icons-material/QrCode2Rounded";
 
 import { useNavigate } from "react-router-dom";
 
@@ -36,11 +36,9 @@ function LoginForm() {
       return;
     }
 
-    // Get registered users from localStorage
     const users =
       JSON.parse(localStorage.getItem("users")) || [];
 
-    // Find matching user
     const user = users.find(
       (item) =>
         item.email.toLowerCase() ===
@@ -53,7 +51,6 @@ function LoginForm() {
       return;
     }
 
-    // Save logged-in user
     localStorage.setItem(
       "currentUser",
       JSON.stringify({
@@ -71,7 +68,6 @@ function LoginForm() {
       localStorage.removeItem("rememberMe");
     }
 
-    // Go to dashboard
     navigate("/dashboard");
   };
 
@@ -82,52 +78,68 @@ function LoginForm() {
   };
 
   return (
-    <Box>
-      {/* LOGIN ICON */}
+    <Box
+      sx={{
+        width: "100%",
+        maxWidth: 390,
+        mx: "auto",
+      }}
+    >
+      {/* HEADER */}
       <Box
         sx={{
-          width: 48,
-          height: 48,
-          borderRadius: 2,
-          bgcolor: "#EFF6FF",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          mb: 2,
+          position: "relative",
+          textAlign: "center",
+          mb: 3,
         }}
       >
-        <LockOutlinedIcon
+        {/* FORGOT PASSWORD */}
+        <Link
+          href="#"
+          underline="none"
           sx={{
-            color: "#2563EB",
-            fontSize: 24,
+            position: "absolute",
+            right: 0,
+            top: 2,
+            fontSize: 12,
+            fontWeight: 600,
+            color: "#D32F2F",
+
+            "&:hover": {
+              color: "#B71C1C",
+              textDecoration: "underline",
+            },
+          }}
+        >
+          Forgot Password?
+        </Link>
+
+        {/* LOGIN */}
+        <Typography
+          sx={{
+            fontSize: 27,
+            fontWeight: 700,
+            color: "#D32F2F",
+            letterSpacing: "-0.4px",
+          }}
+        >
+          Login
+        </Typography>
+
+        {/* UNDERLINE */}
+        <Box
+          sx={{
+            width: 90,
+            height: 3,
+            borderRadius: 2,
+            backgroundColor: "#D32F2F",
+            mx: "auto",
+            mt: 0.8,
           }}
         />
       </Box>
 
-      {/* HEADING */}
-      <Typography
-        sx={{
-          fontSize: 27,
-          fontWeight: 700,
-          color: "#172033",
-          letterSpacing: "-0.4px",
-        }}
-      >
-        Welcome Back
-      </Typography>
-
-      <Typography
-        sx={{
-          fontSize: 13.5,
-          color: "#64748B",
-          mt: 0.8,
-          mb: 3.5,
-        }}
-      >
-        Sign in to continue to Smart PDF AI
-      </Typography>
-
-      <Stack spacing={2.5}>
+      <Stack spacing={1.8}>
         {/* EMAIL */}
         <TextField
           label="Email Address"
@@ -142,6 +154,12 @@ function LoginForm() {
           fullWidth
           size="small"
           error={Boolean(error)}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              borderRadius: 1,
+              backgroundColor: "#FAFAFA",
+            },
+          }}
         />
 
         {/* PASSWORD */}
@@ -180,49 +198,40 @@ function LoginForm() {
               ),
             },
           }}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              borderRadius: 1,
+              backgroundColor: "#FAFAFA",
+            },
+          }}
         />
 
-        {/* REMEMBER + FORGOT */}
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{ mt: -0.5 }}
-        >
-          <FormControlLabel
-            control={
-              <Checkbox
-                size="small"
-                checked={rememberMe}
-                onChange={(e) =>
-                  setRememberMe(e.target.checked)
-                }
-              />
-            }
-            label={
-              <Typography
-                sx={{
-                  fontSize: 12.5,
-                  color: "#475569",
-                }}
-              >
-                Remember me
-              </Typography>
-            }
-          />
-
-          <Link
-            href="#"
-            underline="hover"
-            sx={{
-              fontSize: 12.5,
-              fontWeight: 600,
-              color: "#2563EB",
-            }}
-          >
-            Forgot Password?
-          </Link>
-        </Stack>
+        {/* REMEMBER ME */}
+        <FormControlLabel
+          control={
+            <Checkbox
+              size="small"
+              checked={rememberMe}
+              onChange={(e) =>
+                setRememberMe(e.target.checked)
+              }
+            />
+          }
+          label={
+            <Typography
+              sx={{
+                fontSize: 12,
+                color: "#64748B",
+              }}
+            >
+              Remember me
+            </Typography>
+          }
+          sx={{
+            mt: -0.5,
+            mb: -0.5,
+          }}
+        />
 
         {/* LOGIN BUTTON */}
         <Button
@@ -232,32 +241,164 @@ function LoginForm() {
           onClick={handleLogin}
           fullWidth
           sx={{
-            height: 48,
-            borderRadius: 1.5,
-            textTransform: "none",
-            fontSize: 14,
+            height: 44,
+            borderRadius: 1,
+            backgroundColor: "#D32F2F",
+            textTransform: "uppercase",
+            fontSize: 13,
             fontWeight: 700,
             boxShadow: "none",
+
             "&:hover": {
+              backgroundColor: "#B71C1C",
               boxShadow: "none",
             },
           }}
         >
-          Sign In
+          Login
         </Button>
 
-        {/* REGISTER */}
-        <Button
-          variant="text"
-          onClick={() => navigate("/register")}
+        {/* OR */}
+        <Box
           sx={{
-            textTransform: "none",
-            fontSize: 13,
-            color: "#2563EB",
+            display: "flex",
+            alignItems: "center",
+            gap: 1.5,
+            my: 0.5,
           }}
         >
-          Don't have an account? Create Account
-        </Button>
+          <Box
+            sx={{
+              flex: 1,
+              height: "1px",
+              backgroundColor: "#E2E8F0",
+            }}
+          />
+
+          <Typography
+            sx={{
+              fontSize: 12,
+              fontWeight: 700,
+              color: "#64748B",
+            }}
+          >
+            OR
+          </Typography>
+
+          <Box
+            sx={{
+              flex: 1,
+              height: "1px",
+              backgroundColor: "#E2E8F0",
+            }}
+          />
+        </Box>
+
+        {/* QR LOGIN SECTION */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+            py: 0.5,
+          }}
+        >
+          {/* QR BOX */}
+          <Box
+            sx={{
+              width: 82,
+              height: 82,
+              border: "1px solid #CBD5E1",
+              borderRadius: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#FFFFFF",
+              flexShrink: 0,
+            }}
+          >
+            <QrCode2RoundedIcon
+              sx={{
+                fontSize: 68,
+                color: "#172033",
+              }}
+            />
+          </Box>
+
+          {/* QR INFORMATION */}
+          <Box>
+            <Typography
+              sx={{
+                fontSize: 12.5,
+                fontWeight: 700,
+                color: "#334155",
+                mb: 0.5,
+              }}
+            >
+              Scan to Login
+            </Typography>
+
+            <Typography
+              sx={{
+                fontSize: 11,
+                lineHeight: 1.5,
+                color: "#64748B",
+              }}
+            >
+              Open the Smart PDF AI app
+              <br />
+              and scan this QR code
+              <br />
+              to continue securely.
+            </Typography>
+          </Box>
+        </Box>
+
+        {/* BOTTOM LINKS */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            pt: 1.5,
+          }}
+        >
+          <Link
+            href="#"
+            underline="none"
+            sx={{
+              fontSize: 12,
+              fontWeight: 600,
+              color: "#0EA5C9",
+
+              "&:hover": {
+                textDecoration: "underline",
+              },
+            }}
+          >
+            Help
+          </Link>
+
+          <Button
+            variant="text"
+            onClick={() => navigate("/register")}
+            sx={{
+              minWidth: 0,
+              p: 0,
+              textTransform: "none",
+              fontSize: 12,
+              fontWeight: 600,
+              color: "#0EA5C9",
+
+              "&:hover": {
+                backgroundColor: "transparent",
+                textDecoration: "underline",
+              },
+            }}
+          >
+            Create Account
+          </Button>
+        </Box>
       </Stack>
     </Box>
   );
