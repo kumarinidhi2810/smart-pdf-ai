@@ -1,65 +1,85 @@
-import { Box, Grid, Typography } from "@mui/material";
-import PictureAsPdfRoundedIcon from "@mui/icons-material/PictureAsPdfRounded";
+import { Box } from "@mui/material";
 
 function AuthLayout({ children }) {
   return (
-    <Grid container sx={{ minHeight: "100vh" }}>
-      {/* Left Section */}
-      <Grid
-        size={{ xs: 0, md: 6 }}
+    <Box
+      sx={{
+        minHeight: "100vh",
+        position: "relative",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+
+        backgroundImage: "url('/images/dfccil-bg.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+
+        "&::before": {
+          content: '""',
+          position: "absolute",
+          inset: 0,
+          backgroundColor: "rgba(15, 32, 45, 0.62)",
+        },
+      }}
+    >
+      {/* Login Card */}
+      <Box
         sx={{
-          display: { xs: "none", md: "flex" },
-          backgroundColor: "primary.main",
-          color: "white",
-          alignItems: "center",
-          justifyContent: "center",
-          p: 8,
+          position: "relative",
+          zIndex: 1,
+
+          width: "min(920px, 92%)",
+          minHeight: 470,
+
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "1fr",
+            md: "42% 58%",
+          },
+
+          bgcolor: "#FFFFFF",
+          borderRadius: 3,
+          overflow: "hidden",
+
+          boxShadow: "0 20px 50px rgba(0, 0, 0, 0.25)",
         }}
       >
-        <Box sx={{ maxWidth: 420 }}>
-          <PictureAsPdfRoundedIcon sx={{ fontSize: 72, mb: 3 }} />
+        {/* LEFT - LOGIN */}
+        <Box
+          sx={{
+            p: {
+              xs: 3,
+              md: 4,
+            },
 
-          <Typography variant="h3" fontWeight={700} gutterBottom>
-            Smart PDF AI
-          </Typography>
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
 
-          <Typography
-            variant="h6"
-            sx={{
-              opacity: 0.9,
-              lineHeight: 1.7,
-            }}
-          >
-            Summarize smarter. Read faster.
-          </Typography>
-
-          <Typography
-            sx={{
-              mt: 3,
-              opacity: 0.8,
-              lineHeight: 1.8,
-            }}
-          >
-            Upload PDF documents and generate concise summaries with an elegant
-            AI-powered experience.
-          </Typography>
+            bgcolor: "#FFFFFF",
+          }}
+        >
+          {children}
         </Box>
-      </Grid>
 
-      {/* Right Section */}
-      <Grid
-        size={{ xs: 12, md: 6 }}
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          bgcolor: "background.default",
-          p: 3,
-        }}
-      >
-        {children}
-      </Grid>
-    </Grid>
+        {/* RIGHT - DFCCIL IMAGE */}
+        <Box
+          sx={{
+            display: {
+              xs: "none",
+              md: "block",
+            },
+
+            minHeight: 470,
+
+            backgroundImage: "url('/images/dfccil-login.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+      </Box>
+    </Box>
   );
 }
 

@@ -29,30 +29,50 @@ function LoginForm() {
   const [error, setError] = useState("");
 
   const handleLogin = () => {
-    const demoEmail = "admin@smartpdf.ai";
-    const demoPassword = "Admin@123";
+    setError("");
 
     if (!email.trim() || !password.trim()) {
       setError("Please enter your email and password.");
       return;
     }
 
-    if (
-      email.trim().toLowerCase() === demoEmail &&
-      password === demoPassword
-    ) {
-      localStorage.setItem("isLoggedIn", "true");
+    // Get registered users from localStorage
+    const users =
+      JSON.parse(localStorage.getItem("users")) || [];
 
-      if (rememberMe) {
-        localStorage.setItem("rememberMe", "true");
-      } else {
-        localStorage.removeItem("rememberMe");
-      }
+    // Find matching user
+    const user = users.find(
+      (item) =>
+        item.email.toLowerCase() ===
+          email.trim().toLowerCase() &&
+        item.password === password
+    );
 
-      navigate("/dashboard");
-    } else {
+    if (!user) {
       setError("Invalid email or password.");
+      return;
     }
+
+    // Save logged-in user
+    localStorage.setItem(
+      "currentUser",
+      JSON.stringify({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      })
+    );
+
+    localStorage.setItem("isLoggedIn", "true");
+
+    if (rememberMe) {
+      localStorage.setItem("rememberMe", "true");
+    } else {
+      localStorage.removeItem("rememberMe");
+    }
+
+    // Go to dashboard
+    navigate("/dashboard");
   };
 
   const handleKeyDown = (event) => {
@@ -121,6 +141,7 @@ function LoginForm() {
           onKeyDown={handleKeyDown}
           fullWidth
           size="small"
+          error={Boolean(error)}
         />
 
         {/* PASSWORD */}
@@ -224,29 +245,20 @@ function LoginForm() {
         >
           Sign In
         </Button>
-      </Stack>
 
-      {/* DEMO LOGIN INFO */}
-      <Box
-        sx={{
-          mt: 3,
-          p: 1.5,
-          borderRadius: 1.5,
-          bgcolor: "#F8FAFC",
-          border: "1px solid #E2E8F0",
-        }}
-      >
-        <Typography
+        {/* REGISTER */}
+        <Button
+          variant="text"
+          onClick={() => navigate("/register")}
           sx={{
-            fontSize: 11,
-            color: "#64748B",
-            textAlign: "center",
-            lineHeight: 1.6,
+            textTransform: "none",
+            fontSize: 13,
+            color: "#2563EB",
           }}
         >
-          Demo access: admin@smartpdf.ai
-        </Typography>
-      </Box>
+          Don't have an account? Create Account
+        </Button>
+      </Stack>
     </Box>
   );
 }
