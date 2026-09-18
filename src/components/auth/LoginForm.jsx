@@ -93,27 +93,6 @@ function LoginForm() {
           mb: 3,
         }}
       >
-        {/* FORGOT PASSWORD */}
-        <Link
-          href="#"
-          underline="none"
-          sx={{
-            position: "absolute",
-            right: 0,
-            top: 2,
-            fontSize: 12,
-            fontWeight: 600,
-            color: "#D32F2F",
-
-            "&:hover": {
-              color: "#B71C1C",
-              textDecoration: "underline",
-            },
-          }}
-        >
-          Forgot Password?
-        </Link>
-
         {/* LOGIN */}
         <Typography
           sx={{
@@ -206,7 +185,16 @@ function LoginForm() {
           }}
         />
 
-        {/* REMEMBER ME */}
+       {/* REMEMBER + FORGOT */}
+<Box
+  sx={{
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    mt: -0.5,
+  }}
+>
         <FormControlLabel
           control={
             <Checkbox
@@ -228,10 +216,27 @@ function LoginForm() {
             </Typography>
           }
           sx={{
-            mt: -0.5,
-            mb: -0.5,
+          m:0,
           }}
         />
+         <Link
+    href="#"
+    underline="none"
+    sx={{
+      fontSize: 12,
+      fontWeight: 600,
+      color: "#D32F2F",
+      cursor: "pointer",
+
+      "&:hover": {
+        color: "#B71C1C",
+        textDecoration: "underline",
+      },
+    }}
+  >
+    Forgot Password?
+  </Link>
+  </Box>
 
         {/* LOGIN BUTTON */}
         <Button
